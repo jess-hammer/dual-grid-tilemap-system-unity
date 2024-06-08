@@ -10,9 +10,9 @@ public class DualGridTilemap : MonoBehaviour {
     public Tilemap displayTilemap;
     protected static Vector3Int[] NEIGHBOURS = new Vector3Int[] {
         new Vector3Int(0, 0, 0),
-        new Vector3Int(1, 0, 0),
-        new Vector3Int(0, 1, 0),
-        new Vector3Int(1, 1, 0)
+        new Vector3Int(-1, 0, 0),
+        new Vector3Int(0, -1, 0),
+        new Vector3Int(-1, -1, 0)
     };
 
     public Tile grassPlaceholderTile;
@@ -43,6 +43,11 @@ public class DualGridTilemap : MonoBehaviour {
             {new (Dirt, Dirt, Dirt, Dirt), tiles[12]},
         };
         RefreshDisplayLayer();
+    }
+
+    public void SetCell(Vector3Int coords, Tile tile) {
+        placeholderTilemap.SetTile(coords, tile);
+        setDisplayTile(coords);
     }
 
     private TileType getTileTypeAt(Vector3Int coords) {
