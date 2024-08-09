@@ -8,9 +8,9 @@ using static TileType;
 public class DualGridTilemap : MonoBehaviour {
     protected static Vector3Int[] NEIGHBOURS = new Vector3Int[] {
         new Vector3Int(0, 0, 0),
-        new Vector3Int(-1, 0, 0),
-        new Vector3Int(0, -1, 0),
-        new Vector3Int(-1, -1, 0)
+        new Vector3Int(1, 0, 0),
+        new Vector3Int(0, 1, 0),
+        new Vector3Int(1, 1, 0)
     };
 
     protected static Dictionary<Tuple<TileType, TileType, TileType, TileType>, Tile> neighbourTupleToTile;
@@ -65,10 +65,10 @@ public class DualGridTilemap : MonoBehaviour {
 
     protected Tile calculateDisplayTile(Vector3Int coords) {
         // 4 neighbours
-        TileType topLeft = getPlaceholderTileTypeAt(coords + new Vector3Int(0, 1, 0));
-        TileType topRight = getPlaceholderTileTypeAt(coords + new Vector3Int(1, 1, 0));
-        TileType botLeft = getPlaceholderTileTypeAt(coords + new Vector3Int(0, 0, 0));
-        TileType botRight = getPlaceholderTileTypeAt(coords + new Vector3Int(1, 0, 0));
+        TileType topRight = getPlaceholderTileTypeAt(coords - NEIGHBOURS[0]);
+        TileType topLeft = getPlaceholderTileTypeAt(coords - NEIGHBOURS[1]);
+        TileType botRight = getPlaceholderTileTypeAt(coords - NEIGHBOURS[2]);
+        TileType botLeft = getPlaceholderTileTypeAt(coords - NEIGHBOURS[3]);
 
         Tuple<TileType, TileType, TileType, TileType> neighbourTuple = new(topLeft, topRight, botLeft, botRight);
 

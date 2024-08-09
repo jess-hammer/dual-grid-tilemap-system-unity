@@ -6,9 +6,9 @@ Run the project, then use the mouse buttons to place or remove dirt.
 
 https://github.com/jess-hammer/dual-grid-tilemap-system-unity/assets/59108399/ace1cd25-1c77-48a8-ad87-590741f7bbe7
 
-It does NOT use `RuleTiles` directly, but does act similarly to them. It uses a custom script with hard-coded "rules" to control the placement of plain old regular tiles. Also worth noting, the pivot of the tiles themselves are offset (which you can find in the sprite settings) rather than the entire Tilemap itself.
+It does NOT use `RuleTiles` directly, but does act similarly to them. It uses a custom script with hard-coded "rules" to control the placement of regular tiles.
 
-The main reasons I love the dual-grid approach as opposed to regular RuleTiles is because:
+The main reasons I love the dual-grid approach as opposed to RuleTiles is because:
 - it allows the tiles to have perfectly rounded corners
 - a maximum of only 16 tiles are required in the tileset, as opposed to 47 (and you could cut that number further down to just 6 if your tiles have symmetry)
 - the tiles are not ambiguous for the player, in that each "dirt" or "grass" aligns with the world grid
