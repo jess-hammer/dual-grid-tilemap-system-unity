@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static TileType;
 
-public class DualGridTilemap : MonoBehaviour {
+public class DualGridTilemap : MonoBehaviour
+{
     protected static Vector3Int[] NEIGHBOURS = new Vector3Int[] {
         new Vector3Int(0, 0, 0),
         new Vector3Int(1, 0, 0),
@@ -26,7 +27,8 @@ public class DualGridTilemap : MonoBehaviour {
     // Provide the 16 tiles in the inspector
     public Tile[] tiles;
 
-    void Start() {
+    void Start()
+    {
         // This dictionary stores the "rules", each 4-neighbour configuration corresponds to a tile
         // |_1_|_2_|
         // |_3_|_4_|
@@ -51,19 +53,49 @@ public class DualGridTilemap : MonoBehaviour {
         RefreshDisplayTilemap();
     }
 
-    public void SetCell(Vector3Int coords, Tile tile) {
+    //public void SetCell(Vector3Int coords, Tile tile)
+    //{
+    //    placeholderTilemap.SetTile(coords, tile);
+    //    setDisplayTile(coords);
+    //}
+    public void SetCell(Vector3Int coords, Tile tile)
+    {
         placeholderTilemap.SetTile(coords, tile);
-        setDisplayTile(coords);
+        UpdateAffectedTiles(coords);
+    }
+    private void UpdateAffectedTiles(Vector3Int coords)
+    {
+        // Update the tile at the modified position and its neighbors
+        // Collect all positions to refresh
+        HashSet<Vector3Int> positionsToRefresh = new HashSet<Vector3Int>();
+
+        // Add the tile itself
+        positionsToRefresh.Add(coords);
+
+        // Add its neighbors that might be affected
+        foreach (var offset in NEIGHBOURS)
+        {
+            positionsToRefresh.Add(coords + offset);
+        }
+
+        // Update the display tiles for all affected positions
+        foreach (var pos in positionsToRefresh)
+        {
+            displayTilemap.SetTile(pos, calculateDisplayTile(pos));
+        }
     }
 
-    private TileType getPlaceholderTileTypeAt(Vector3Int coords) {
+
+    private TileType getPlaceholderTileTypeAt(Vector3Int coords)
+    {
         if (placeholderTilemap.GetTile(coords) == grassPlaceholderTile)
             return Grass;
         else
             return Dirt;
     }
 
-    protected Tile calculateDisplayTile(Vector3Int coords) {
+    protected Tile calculateDisplayTile(Vector3Int coords)
+    {
         // 4 neighbours
         TileType topRight = getPlaceholderTileTypeAt(coords - NEIGHBOURS[0]);
         TileType topLeft = getPlaceholderTileTypeAt(coords - NEIGHBOURS[1]);
@@ -75,24 +107,30 @@ public class DualGridTilemap : MonoBehaviour {
         return neighbourTupleToTile[neighbourTuple];
     }
 
-    protected void setDisplayTile(Vector3Int pos) {
-        for (int i = 0; i < NEIGHBOURS.Length; i++) {
+    protected void setDisplayTile(Vector3Int pos)
+    {
+        for (int i = 0; i < NEIGHBOURS.Length; i++)
+        {
             Vector3Int newPos = pos + NEIGHBOURS[i];
             displayTilemap.SetTile(newPos, calculateDisplayTile(newPos));
         }
     }
 
-    // The tiles on the display tilemap will recalculate themselves based on the placeholder tilemap
-    public void RefreshDisplayTilemap() {
-        for (int i = -50; i < 50; i++) {
-            for (int j = -50; j < 50; j++) {
+   // The tiles on the display tilemap will recalculate themselves based on the placeholder tilemap
+    public void RefreshDisplayTilemap()
+    {
+        for (int i = -50; i < 50; i++)
+        {
+            for (int j = -50; j < 50; j++)
+            {
                 setDisplayTile(new Vector3Int(i, j, 0));
             }
         }
     }
 }
 
-public enum TileType {
+public enum TileType
+{
     None,
     Grass,
     Dirt
