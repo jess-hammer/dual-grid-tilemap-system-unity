@@ -2,6 +2,10 @@
 
 #### This is a demo of how I implemented a dual-grid tilemap system in Unity 2023.1.11f1
 
+👀 Looking for an alternative implementation? 👀
+- Check out [DualGrid](https://github.com/skner-dev/DualGrid) by skner! It is structured as a Unity package, is compatible with RuleTiles and has automatic tile setup.
+
+### Demo
 Run the project, then use the mouse buttons to place or remove dirt.
 
 https://github.com/jess-hammer/dual-grid-tilemap-system-unity/assets/59108399/ace1cd25-1c77-48a8-ad87-590741f7bbe7
